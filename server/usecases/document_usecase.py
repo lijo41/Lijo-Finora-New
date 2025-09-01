@@ -4,9 +4,12 @@ import os
 import sys
 import uuid
 import tempfile
+import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 # Add src directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent / "src"))
@@ -78,6 +81,7 @@ class DocumentUseCase:
             # Store in vector database
             chunk_dicts = [
                 {
+                    "id": chunk.id,
                     "text": chunk.text,
                     "vector": chunk.embedding,
                     "metadata": chunk.metadata
@@ -139,6 +143,7 @@ class DocumentUseCase:
             # Store in vector database
             chunk_dicts = [
                 {
+                    "id": chunk.id,
                     "text": chunk.text,
                     "vector": chunk.embedding,
                     "metadata": chunk.metadata
@@ -231,3 +236,15 @@ class DocumentUseCase:
         except Exception as e:
             logger.error(f"Error getting all chunks: {str(e)}")
             return []
+    
+    async def get_chunk_by_id(self, chunk_id: str) -> Optional[Dict[str, Any]]:
+        """Get a specific chunk by its ID."""
+        try:
+            chunks = self.vector_store.get_all_chunks()
+            for chunk in chunks:
+                if chunk.get("id") == chunk_id:
+                    return chunk
+            return None
+        except Exception as e:
+            logger.error(f"Error getting chunk by ID {chunk_id}: {str(e)}")
+            return None

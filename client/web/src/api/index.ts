@@ -113,5 +113,29 @@ export const apiService = {
     return response.data
   },
 
+  // GSTR-1 functions
+  getGSTR1Chunks: async (): Promise<{ success: boolean, chunks: any[] }> => {
+    const response = await api.get('/gstr1/chunks')
+    return response.data
+  },
+
+  processGSTR1Data: async (chunkIds: string[]): Promise<{ success: boolean, gstr1_data: any, processed_chunks: number }> => {
+    const response = await api.post('/gstr1/process', { chunk_ids: chunkIds })
+    return response.data
+  },
+
+  processGSTR1Chunk: async (chunkId: string): Promise<{ success: boolean, gstr1_data: any, chunk_id: string }> => {
+    const response = await api.post('/gstr1/process-chunk', null, { params: { chunk_id: chunkId } })
+    return response.data
+  },
+
+  generateGSTR1Summary: async (chunkIds: string[], companyDetails: { gstin: string, legal_name: string, trade_name?: string, return_period: string }): Promise<{ success: boolean, gstr1_data: any, summary: string, processed_chunks: number }> => {
+    const response = await api.post('/gstr1/generate-summary', { 
+      chunk_ids: chunkIds,
+      company_details: companyDetails
+    })
+    return response.data
+  },
+
 }
 export default apiService

@@ -95,15 +95,18 @@ class VectorStore:
                     continue
                 
                 metadata = chunk.get("metadata", {})
+                chunk_id = chunk.get("id", str(uuid.uuid4()))
                 
-                ids.append(str(uuid.uuid4()))
+                ids.append(chunk_id)
                 documents.append(chunk["text"])
                 embeddings.append(chunk["vector"])
                 metadatas.append({
                     "filename": metadata.get("filename", ""),
                     "title": metadata.get("title", ""),
                     "source": metadata.get("source", ""),
-                    "page_numbers": str(metadata.get("page_numbers", []))
+                    "page_numbers": str(metadata.get("page_numbers", [])),
+                    "document_id": metadata.get("document_id", ""),
+                    "chunk_index": metadata.get("chunk_index", 0)
                 })
             
             if not ids:
@@ -191,9 +194,14 @@ class VectorStore:
             if results['documents']:
                 for i, doc in enumerate(results['documents']):
                     metadata = results['metadatas'][i] if results['metadatas'] else {}
+                    chunk_id = results['ids'][i] if results['ids'] else f"chunk_{i}"
                     chunks.append({
-                        "text": doc,
-                        "metadata": metadata
+                        "id": chunk_id,
+                        "content": doc,
+                        "text": doc,  # Keep both for compatibility
+                        "metadata": metadata,
+                        "document_name": metadata.get("filename", "Unknown Document"),
+                        "chunk_index": metadata.get("chunk_index", i)
                     })
             
             return chunks
