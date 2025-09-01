@@ -22,7 +22,7 @@ class GroqChatInterface:
             # Fallback initialization without extra parameters
             self.client = Groq()
             self.client.api_key = groq_api_key
-        self.model = "llama3-8b-8192"  # Fast and reliable Groq model
+        self.model = "llama-3.1-8b-instant"  # Fast and reliable Groq model
         self.temperature = TEMPERATURE
         self.response_length = response_length
         
