@@ -1,0 +1,29 @@
+INVOICE
+
+ABC Enterprises Pvt Ltd
+GSTIN: 29ABCDE1234F1Z5
+Legal Name: ABC Enterprises Private Limited
+Trading Name: ABC Enterprises
+Address: 123 Business Street, Bangalore, Karnataka - 560001
+
+Invoice No: INV-2024-001
+Date: 2024-08-15
+Customer: XYZ Corp
+Customer GSTIN: 29XYZAB5678G1H2
+
+Items:
+1. Product A - HSN: 8471 - Qty: 10 - Rate: 1000 - Amount: 10000
+   CGST @ 9%: 900
+   SGST @ 9%: 900
+   Total: 11800
+
+2. Product B - HSN: 8473 - Qty: 5 - Rate: 2000 - Amount: 10000  
+   CGST @ 9%: 900
+   SGST @ 9%: 900
+   Total: 11800
+
+Total Taxable Value: 20000
+Total CGST: 1800
+Total SGST: 1800
+Total Tax: 3600
+Total Invoice Value: 23600
